@@ -12,7 +12,7 @@ class BaseModel:
     Base model class for the whole project
     """
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """
         Constructor function for base model class
         """
@@ -24,7 +24,8 @@ class BaseModel:
         """
         Returns string representaion of the instance of the class
         """
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        return "[{}] ({}) {}".format(self.__class__.__name__,
+                                     self.id, self.__dict__)
 
     def save(self):
         """
