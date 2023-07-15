@@ -38,12 +38,7 @@ class BaseModel:
         of __dict__ of the instance of this class.
         """
         data = self.__dict__.copy()
-        data["__class__"] = self.__class__
+        data["__class__"] = self.__class__.__name__
         data["created_at"] = data["created_at"].isoformat()
         data["updated_at"] = data["updated_at"].isoformat()
         return data
-
-
-if __name__ == "__main__":
-    base = BaseModel()
-    print(base.to_dict())
