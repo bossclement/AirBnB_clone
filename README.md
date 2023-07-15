@@ -1,5 +1,4 @@
 # Welcome to the AirBnB clone project!
-===========
 
 This module command interpreter to manage your AirBnB objects
 
