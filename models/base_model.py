@@ -5,6 +5,7 @@ of all the other classes used in this project
 """
 import uuid
 from datetime import datetime
+import models
 
 
 class BaseModel:
@@ -21,11 +22,14 @@ class BaseModel:
         self.updated_at = datetime.now()
 
         # Overwrite the attribute's values to new ones
-        for attr,  value in kwargs.items():
-            if attr in ["created_at", "updated_at"]:  # change to datetime
-                setattr(self, attr, datetime.fromisoformat(value))
-            elif attr != "__class__":  # Ignore the __class__ value
-                setattr(self, attr, value)
+        if kwargs:
+            for attr,  value in kwargs.items():
+                if attr in ["created_at", "updated_at"]:  # change to datetime
+                    setattr(self, attr, datetime.fromisoformat(value))
+                elif attr != "__class__":  # Ignore the __class__ value
+                    setattr(self, attr, value)
+        else:
+            models.storage.new(self)  # pass in the instance of the class
 
     def __str__(self):
         """
@@ -39,6 +43,7 @@ class BaseModel:
         Updates the update_at variable to the current time
         """
         self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """
