@@ -24,7 +24,6 @@ class BaseModel:
         # Overwrite the attribute's values to new ones
         if kwargs:
             for attr, value in kwargs.items():
-
                 if attr in ["created_at", "updated_at"]:  # change to datetime
                     setattr(self, attr, datetime.fromisoformat(value))
                 elif attr != "__class__":  # Ignore the __class__ value
