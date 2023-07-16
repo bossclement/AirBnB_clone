@@ -28,7 +28,6 @@ class BaseModel:
                     setattr(self, attr, datetime.fromisoformat(value))
                 elif attr != "__class__":  # Ignore the __class__ value
                     setattr(self, attr, value)
-
         else:
             models.storage.new(self)  # pass in the instance of the class
 
