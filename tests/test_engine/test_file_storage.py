@@ -9,6 +9,18 @@ from models.base_model import BaseModel
 class TestBaseModel(unittest.TestCase):
     """Unittest for FileStorage class"""
 
+    @classmethod
+    def setUpClass(cls):
+        """Creates attributes for classes that i'll need"""
+        cls.storage = FileStorage()
+        cls.base = BaseModel()
+
+    @classmethod
+    def tearDownClass(cls):
+        """Deletes all the created class attributes"""
+        del cls.storage
+        del cls.base
+
     def test_docstrings(self):
         """Check docstrings for FileStorage class"""
         self.assertIsNotNone(FileStorage.__doc__)
@@ -32,8 +44,14 @@ class TestBaseModel(unittest.TestCase):
 
     def test_attributes(self):
         """Check for attributes for FileStorage class"""
-        self.assertEqual(str, type(FileStorage._FileStorage__file_path))
-        self.assertEqual(dict, type(FileStorage._FileStorage__objects))
+        path = "file.json"
+        self.assertEqual(str, type(self.storage._FileStorage__file_path))
+        self.assertEqual(dict, type(self.storage._FileStorage__objects))
+        self.assertEqual(self.storage._FileStorage__file_path, path)
+
+    def test_init(self):
+        """Test initialization."""
+        self.assertTrue(isinstance(self.storage, FileStorage))
 
     def test_all(self):
         """Check all method for filestorage class"""
