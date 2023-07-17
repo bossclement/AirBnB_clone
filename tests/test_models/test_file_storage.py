@@ -29,6 +29,11 @@ class TestBaseModel(unittest.TestCase):
         fl2 = FileStorage()
         self.assertEqual(fl1.all(), fl2.all())
 
+    def test_attributes(self):
+        """Check for attributes."""
+        self.assertEqual(str, type(FileStorage._FileStorage__file_path))
+        self.assertEqual(dict, type(FileStorage._FileStorage__objects))
+
 
 if __name__ == "__main__":
     unittest.main()
