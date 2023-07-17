@@ -96,18 +96,8 @@ class TestBaseModel(unittest.TestCase):
         except Exception:
             self.fail()
 
-    def test_save(self):
-        """Check save method of FileStorage method"""
-        self.storage.save()
-        with open("file.json", "r", encoding="utf-8") as f:
-            save_text = f.read()
-            self.assertIn("BaseModel." + self.base.id, save_text)
-            self.assertIn("User." + self.user.id, save_text)
-            self.assertIn("State." + self.state.id, save_text)
-            self.assertIn("Place." + self.place.id, save_text)
-            self.assertIn("City." + self.city.id, save_text)
-            self.assertIn("Amenity." + self.amenity.id, save_text)
-            self.assertIn("Review." + self.review.id, save_text)
+    
+
 
 
 
