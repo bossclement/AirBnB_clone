@@ -40,7 +40,7 @@ class TestBaseModel(unittest.TestCase):
         """Tests the constructor function of the basemodel"""
         now = datetime.now()
         id = "5"
-        bs = BaseModel(id=id, created_at=now)
+        bs = BaseModel(id=id, created_at=now.isoformat())
 
         self.assertEqual(id, bs.id)
         self.assertEqual(now, bs.created_at)
@@ -71,3 +71,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(bs.created_at.isoformat(), bs_dict["created_at"])
         self.assertEqual(bs.updated_at.isoformat(), bs_dict["updated_at"])
         self.assertEqual(bs_dict.get("_sa_instance_state", None), None)
+
+
+if __name__ == "__main__":
+    unittest.main()
