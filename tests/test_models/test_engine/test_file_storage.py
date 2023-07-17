@@ -71,6 +71,13 @@ class TestBaseModel(unittest.TestCase):
         store = FileStorage._FileStorage__objects
         self.assertIn("BaseModel." + bs.id, store)
 
+    def test_reload_no_file(self):
+        """Test reload function in case the file path is not provided"""
+        try:
+            self.storage.reload()
+        except Exception:
+            self.fail()
+
 
 
 if __name__ == "__main__":
