@@ -4,6 +4,12 @@ import unittest
 from models.engine.file_storage import FileStorage
 from datetime import datetime
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 import json
 
 
@@ -15,6 +21,12 @@ class TestBaseModel(unittest.TestCase):
         """Creates attributes for classes that i'll need"""
         cls.storage = FileStorage()
         cls.base = BaseModel()
+        cls.user = User()
+        cls.state = State()
+        cls.city = City()
+        cls.amenity = Amenity()
+        cls.place = Place()
+        cls.review = Review()
 
     @classmethod
     def tearDownClass(cls):
@@ -77,6 +89,19 @@ class TestBaseModel(unittest.TestCase):
             self.storage.reload()
         except Exception:
             self.fail()
+
+    def test_save(self):
+        """Check save method of FileStorage method"""
+        self.storage.save()
+        with open("file.json", "r", encoding="utf-8") as f:
+            save_text = f.read()
+            self.assertIn("BaseModel." + self.base.id, save_text)
+            self.assertIn("User." + self.user.id, save_text)
+            self.assertIn("State." + self.state.id, save_text)
+            self.assertIn("Place." + self.place.id, save_text)
+            self.assertIn("City." + self.city.id, save_text)
+            self.assertIn("Amenity." + self.amenity.id, save_text)
+            self.assertIn("Review." + self.review.id, save_text)
 
 
 
