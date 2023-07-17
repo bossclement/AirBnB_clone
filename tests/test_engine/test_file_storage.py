@@ -3,6 +3,7 @@
 import unittest
 from models.engine.file_storage import FileStorage
 from datetime import datetime
+from models.base_model import BaseModel
 
 
 class TestBaseModel(unittest.TestCase):
@@ -30,9 +31,16 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(fl1.all(), fl2.all())
 
     def test_attributes(self):
-        """Check for attributes."""
+        """Check for attributes for FileStorage class"""
         self.assertEqual(str, type(FileStorage._FileStorage__file_path))
         self.assertEqual(dict, type(FileStorage._FileStorage__objects))
+
+    def test_all(self):
+        """Check all method for filestorage class"""
+        store = FileStorage()
+        obj = store.all()
+        self.assertEqual(type(obj), dict)
+        self.assertIs(obj, FileStorage._FileStorage__objects)
 
 
 if __name__ == "__main__":
