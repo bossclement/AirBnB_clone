@@ -33,6 +33,12 @@ class TestBaseModel(unittest.TestCase):
         """Deletes all the created class attributes"""
         del cls.storage
         del cls.base
+        del cls.user
+        del cls.state
+        del cls.city
+        del cls.amenity
+        del cls.place
+        del cls.review
 
     def test_docstrings(self):
         """Check docstrings for FileStorage class"""
