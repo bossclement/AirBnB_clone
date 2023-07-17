@@ -80,18 +80,14 @@ class TestBaseModel(unittest.TestCase):
 
     def test_reload(self):
         """Test reload function for FileStorage class"""
-        bs = BaseModel()
-        with open("file.json", "w", encoding="utf-8") as f:
-            key = "{}.{}".format(type(bs).__name__, bs.id)
-            json.dump({key: bs.to_dict()}, f)
-        self.storage.reload()
-        store = FileStorage._FileStorage__objects
-        self.assertIn("BaseModel." + bs.id, store)
-
-    def test_reload_no_file(self):
-        """Test reload function in case the file path is not provided"""
         try:
+            bs = BaseModel()
+            with open("file.json", "w", encoding="utf-8") as f:
+                key = "{}.{}".format(type(bs).__name__, bs.id)
+                json.dump({key: bs.to_dict()}, f)
             self.storage.reload()
+            store = FileStorage._FileStorage__objects
+            self.assertIn("BaseModel." + bs.id, store)
         except Exception:
             self.fail()
 
