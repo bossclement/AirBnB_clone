@@ -4,6 +4,7 @@ import unittest
 from models.engine.file_storage import FileStorage
 from datetime import datetime
 from models.base_model import BaseModel
+import json
 
 
 class TestBaseModel(unittest.TestCase):
@@ -59,6 +60,17 @@ class TestBaseModel(unittest.TestCase):
         obj = store.all()
         self.assertEqual(type(obj), dict)
         self.assertIs(obj, FileStorage._FileStorage__objects)
+
+    def test_reload(self):
+        """Test reload function for FileStorage class"""
+        bs = BaseModel()
+        with open("file.json", "w", encoding="utf-8") as f:
+            key = "{}.{}".format(type(bs).__name__, bs.id)
+            json.dump({key: bs.to_dict()}, f)
+        self.storage.reload()
+        store = FileStorage._FileStorage__objects
+        self.assertIn("BaseModel." + bs.id, store)
+
 
 
 if __name__ == "__main__":
