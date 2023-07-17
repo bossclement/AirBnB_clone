@@ -89,7 +89,7 @@ class TestBaseModel(unittest.TestCase):
             store = FileStorage._FileStorage__objects
             self.assertIn("BaseModel." + bs.id, store)
         except Exception:
-            self.fail()
+            self.fail
 
     def test_save(self):
         """Check save method of FileStorage method"""
