@@ -11,6 +11,15 @@ from models import storage
 class HBNBCommand(cmd.Cmd):
     """Class that inherits from Cmd"""
     prompt = "(hbnb) "
+    __classes = {
+        "BaseModel",
+        "User",
+        "State",
+        "City",
+        "Amenity",
+        "Place",
+        "Review"
+    }
 
     def do_quit(self, line):
         """Quits the program"""
@@ -29,7 +38,7 @@ class HBNBCommand(cmd.Cmd):
         """Creates a new instance of BaseModel, saves it and prints the id"""
         if not line:
             print("** class name missing **")
-        elif line not in ["BaseModel"]:
+        elif line not in self.__classes:
             print("** class doesn't exist **")
         else:
             obj = BaseModel()
@@ -42,7 +51,7 @@ class HBNBCommand(cmd.Cmd):
         args = line.split()
         if not args:
             print("** class name missing **")
-        elif args[0] not in ["BaseModel"]:
+        elif args[0] not in self.__classes:
             print("** class doesn't exist **")
         elif len(args) < 2:
             print("** instance id missing **")
@@ -59,7 +68,7 @@ class HBNBCommand(cmd.Cmd):
         args = line.split()
         if not args:
             print("** class name missing **")
-        elif args[0] not in ["BaseModel"]:
+        elif args[0] not in self.__classes:
             print("** class doesn't exist **")
         elif len(args) < 2:
             print("** instance id missing **")
@@ -78,7 +87,7 @@ class HBNBCommand(cmd.Cmd):
         objects = storage.all()
         if not args:
             print([str(obj) for obj in objects.values()])
-        elif args[0] in ["BaseModel"]:
+        elif args[0] in self.__classes:
             print([str(obj) for obj in objects.values()
                    if type(obj).__name__ == args[0]])
         else:
