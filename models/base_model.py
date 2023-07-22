@@ -51,7 +51,7 @@ class BaseModel:
         of __dict__ of the instance of this class.
         """
         data = self.__dict__.copy()
-        data["__class__"] = str(type(self).__name__)
+        data["__class__"] = self.__class__.__name__
         data["created_at"] = data["created_at"].isoformat()
         data["updated_at"] = data["updated_at"].isoformat()
         return data
