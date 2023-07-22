@@ -96,49 +96,31 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, line):
         """Updates an instance based on the class name and id"""
-        """Updates an instanceby adding or updating attribute
-        Exceptions:
-            SyntaxError: when there is no args given
-            NameError: when there is no object taht has the name
-            IndexError: when there is no id given
-            KeyError: when there is no valid id given
-            AttributeError: when there is no attribute given
-            ValueError: when there is no value given
-        """
-        try:
-            if not line:
-                raise SyntaxError()
-            my_list = split(line, " ")
-            if my_list[0] not in self.__classes:
-                raise NameError()
-            if len(my_list) < 2:
-                raise IndexError()
-            objects = storage.all()
-            key = my_list[0] + '.' + my_list[1]
-            if key not in objects:
-                raise KeyError()
-            if len(my_list) < 3:
-                raise AttributeError()
-            if len(my_list) < 4:
-                raise ValueError()
-            v = objects[key]
-            try:
-                v.__dict__[my_list[2]] = eval(my_list[3])
-            except Exception:
-                v.__dict__[my_list[2]] = my_list[3]
-                v.save()
-        except SyntaxError:
+        args = split(line, " ")
+        if not args:
             print("** class name missing **")
-        except NameError:
+        elif args[0] not in self.__classes:
             print("** class doesn't exist **")
-        except IndexError:
+        elif len(args) < 2:
             print("** instance id missing **")
-        except KeyError:
-            print("** no instance found **")
-        except AttributeError:
+        elif len(args) < 3:
             print("** attribute name missing **")
-        except ValueError:
+        elif len(args) < 4:
             print("** value missing **")
+        else:
+            key = args[0] + '.' + args[1]
+            objects = storage.all()
+            if key in objects:
+                obj = objects[key]
+                attr_name = args[2]
+                attr_value = args[3]
+                try:
+                    setattr(obj, attr_name, eval(attr_value))
+                except:
+                    setattr(obj, attr_name, attr_value)
+                obj.save()
+            else:
+                print("** no instance found **")
 
 
 if __name__ == '__main__':
