@@ -34,7 +34,7 @@ class FileStorage:
                 if type(v) == cls:
                     cls_dict[k] = v
             return cls_dict
-        return self.__object
+        return self.__objects
     
     def new(self, obj):
         """
