@@ -6,6 +6,7 @@ to interact with users.
 import cmd
 from models.base_model import BaseModel
 from models import storage
+from shlex import split
 
 
 class HBNBCommand(cmd.Cmd):
@@ -65,7 +66,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, line):
         """Deletes an instance based on the class name and id"""
-        args = line.split()
+        args = split(line, " ")
         if not args:
             print("** class name missing **")
         elif args[0] not in self.__classes:
@@ -98,7 +99,7 @@ class HBNBCommand(cmd.Cmd):
         args = line.split()
         if not args:
             print("** class name missing **")
-        elif args[0] not in storage.classes:
+        elif args[0] not in self.__classes:
             print("** class doesn't exist **")
         elif len(args) < 2:
             print("** instance id missing **")
@@ -119,5 +120,3 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
 
-if __name__ == '__main__':
-    HBNBCommand().cmdloop()

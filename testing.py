@@ -23,8 +23,6 @@ if os.path.exists(file_path):
 """
  Backup console file
 """
-if os.path.exists("tmp_console_main.py"):
-    shutil.copy("tmp_console_main.py", "console.py")
 shutil.copy("console.py", "tmp_console_main.py")
 
 """
@@ -72,19 +70,16 @@ def exec_command(my_console, the_command, last_lines = 1):
 """
  Tests
 """
-print(1)
 result = exec_command(my_console, "create BaseModel")
 if result is None or result == "":
     print("FAIL: No ID retrieved")
     
 model_id = result
 
-print(2)
 result = exec_command(my_console, "update BaseModel {}".format(model_id))
 if result is None or result == "":
     print("FAIL: no output")
 
-print(3)
 search_str = "** attribute name missing **"
 if result != search_str:
     print("FAIL: wrong message: \"{}\" instead of \"{}\"".format(result, search_str))
