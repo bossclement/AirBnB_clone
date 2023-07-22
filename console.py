@@ -6,7 +6,6 @@ to interact with users.
 import cmd
 from models.base_model import BaseModel
 from models import storage
-from shlex import split
 
 
 class HBNBCommand(cmd.Cmd):
@@ -96,10 +95,10 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, line):
         """Updates an instance based on the class name and id"""
-        args = split(line, " ")
+        args = line.split()
         if not args:
             print("** class name missing **")
-        elif args[0] not in self.__classes:
+        elif args[0] not in storage.classes:
             print("** class doesn't exist **")
         elif len(args) < 2:
             print("** instance id missing **")
@@ -114,14 +113,9 @@ class HBNBCommand(cmd.Cmd):
                 obj = objects[key]
                 attr_name = args[2]
                 attr_value = args[3]
-                try:
-                    setattr(obj, attr_name, eval(attr_value))
-                except:
-                    setattr(obj, attr_name, attr_value)
+                setattr(obj, attr_name, attr_value)
                 obj.save()
             else:
                 print("** no instance found **")
 
 
-if __name__ == '__main__':
-    HBNBCommand().cmdloop()
