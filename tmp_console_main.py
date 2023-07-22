@@ -5,6 +5,12 @@ to interact with users.
 """
 import cmd
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 from models import storage
 from shlex import split
 
@@ -37,12 +43,24 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, line):
         """Creates a new instance of BaseModel, saves it and prints the id"""
+        args = split(line, " ")
         if not line:
             print("** class name missing **")
-        elif line not in self.__classes:
+        elif args[0] not in self.__classes:
             print("** class doesn't exist **")
         else:
-            obj = BaseModel()
+            kwargs = {}
+            for i in range(1, len(args)):
+                key, value = tuple(args[i].split("="))
+                if value[0] == '"':
+                    value = value.strip('"').replace("_", " ")
+                else:
+                    try:
+                        value = eval(value)
+                    except (SyntaxError, NameError):
+                        continue
+                kwargs[key] = value
+            obj = eval(args[0])(**kwargs)
             obj.save()
             print(obj.id)
 

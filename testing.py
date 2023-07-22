@@ -70,20 +70,22 @@ def exec_command(my_console, the_command, last_lines = 1):
 """
  Tests
 """
-result = exec_command(my_console, "create BaseModel")
+result = exec_command(my_console, "create User")
 if result is None or result == "":
     print("FAIL: No ID retrieved")
     
+with open(file_path, "r") as file:
+    s_file = file.read()
+    if result not in s_file:
+        print("FAIL: New ID not in the JSON file")
+
 model_id = result
-
-result = exec_command(my_console, "update BaseModel {}".format(model_id))
-if result is None or result == "":
-    print("FAIL: no output")
-
-search_str = "** attribute name missing **"
-if result != search_str:
-    print("FAIL: wrong message: \"{}\" instead of \"{}\"".format(result, search_str))
-    
+print('destroy User {}'.format(model_id))
+exec_command(my_console, "destroy User {}".format(model_id))
+with open(file_path, "r") as file:
+    s_file = file.read()
+    if result in s_file:
+        print("FAIL: New ID is still in the JSON file")
 print("OK", end="")
 
 shutil.copy("tmp_console_main.py", "console.py")
