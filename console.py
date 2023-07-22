@@ -102,14 +102,19 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, line):
         """Prints all string representation of all instances"""
-        args = line.split()
-        objects = storage.all()
-        if not args:
-            print([str(obj) for obj in objects.values()])
-        elif args[0] in self.__classes:
-            print([str(obj) for obj in objects.values()
-                   if type(obj).__name__ == args[0]])
-        else:
+        if not line:
+            o = storage.all()
+            print([o[k].__str__() for k in o])
+            return
+        try:
+            args = line.split(" ")
+            if args[0] not in self.__classes:
+                raise NameError()
+
+            o = storage.all(eval(args[0]))
+            print([o[k].__str__() for k in o])
+
+        except NameError:
             print("** class doesn't exist **")
 
     def do_update(self, line):
@@ -137,4 +142,28 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** no instance found **")
 
-
+    def default(self, line):
+        """retrieve all instances of a class and
+        retrieve the number of instances
+        """
+        my_list = line.split('.')
+        if len(my_list) >= 2:
+            if my_list[1] == "all()":
+                self.do_all(my_list[0])
+            elif my_list[1] == "count()":
+                self.count(my_list[0])
+            elif my_list[1][:4] == "show":
+                self.do_show(self.strip_clean(my_list))
+            elif my_list[1][:7] == "destroy":
+                self.do_destroy(self.strip_clean(my_list))
+            elif my_list[1][:6] == "update":
+                args = self.strip_clean(my_list)
+                if isinstance(args, list):
+                    obj = storage.all()
+                    key = args[0] + ' ' + args[1]
+                    for k, v in args[2].items():
+                        self.do_update(key + ' "{}" "{}"'.format(k, v))
+                else:
+                    self.do_update(args)
+        else:
+            cmd.Cmd.default(self, line)
