@@ -1,0 +1,56 @@
+.locations, .amenities {
+    height: 100%;
+    width: 25%;
+    padding-left: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    position: relative;
+
+}
+
+.locations {
+    border-right: 1px solid #DDDDDD;
+}
+
+.locations h3, .amenities h3 {
+    font-weight: 600;
+}
+
+.locations h4, .amenities h4 {
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.locations h3, .locations h4, .amenities h3, .amenities h4 {
+    margin: 0;
+    padding: 0;
+}
+
+.popover {
+    visibility: hidden;
+    width: 100%;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    background: #FAFAFA;
+    padding-bottom: 25px;
+    position: absolute;
+    top: 96%;
+    left: 0;
+}
+.amenities .popover {
+    padding: 20px 0;
+    margin-left: -5px;
+    margin-top: 1%;
+}
+.locations .popover {
+    margin-top: 1%;
+}
+.popover ul {
+    list-style-type: none;
+}
+.amenities:hover .popover,
+.locations:hover .popover {
+    visibility: visible;
+}
