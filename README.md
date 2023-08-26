@@ -34,5 +34,3 @@ Do you remember the Shell? It’s exactly the same but limited to a specific use
 - What is *args and how to use it
 - What is **kwargs and how to use it
 - How to handle named arguments in a function
-
-## README.md updated line
